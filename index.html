@@ -287,15 +287,33 @@ async function loadScores() {
     return;
   }
 
-  const totals = {};
+ const latestTimeByOffice = {};
 
 rows.forEach(row => {
-  const key = `${row.office || ""}-${cleanName(row.fundraiser)}`;
+  const office = row.office || "Unknown";
+
+  if (
+    !latestTimeByOffice[office] ||
+    row.created_at > latestTimeByOffice[office]
+  ) {
+    latestTimeByOffice[office] = row.created_at;
+  }
+});
+
+const totals = {};
+
+rows.forEach(row => {
+  const office = row.office || "Unknown";
+
+  if (row.created_at !== latestTimeByOffice[office]) return;
+
+  const fundraiser = cleanName(row.fundraiser);
+  const key = `${office}-${fundraiser}`;
 
   if (!totals[key]) {
     totals[key] = {
-      office: row.office || "Unknown",
-      fundraiser: cleanName(row.fundraiser),
+      office,
+      fundraiser,
       signups: 0
     };
   }
