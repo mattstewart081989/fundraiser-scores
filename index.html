@@ -287,18 +287,23 @@ async function loadScores() {
     return;
   }
 
-  const latest = {};
-  rows.forEach(row => {
-    const key = `${row.office || ""}-${row.fundraiser || ""}`;
-    if (!latest[key]) latest[key] = row;
-  });
+  const totals = {};
 
-  const data = Object.values(latest)
-    .map(row => ({
+rows.forEach(row => {
+  const key = `${row.office || ""}-${cleanName(row.fundraiser)}`;
+
+  if (!totals[key]) {
+    totals[key] = {
       office: row.office || "Unknown",
       fundraiser: cleanName(row.fundraiser),
-      signups: Number(row.signups || 0)
-    }))
+      signups: 0
+    };
+  }
+
+  totals[key].signups += Number(row.signups || 0);
+});
+
+const data = Object.values(totals)
     .filter(row => row.signups > 0)
     .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
 
