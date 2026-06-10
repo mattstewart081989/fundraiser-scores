@@ -287,15 +287,28 @@ async function loadScores() {
     return;
   }
 
- const data = rows
-  .map(row => ({
-    office: row.office || "Unknown",
-    fundraiser: cleanName(row.fundraiser),
-    signups: Number(row.signups || 0)
-  }))
+const unique = {};
+
+rows.forEach(row => {
+  const office = row.office || "Unknown";
+  const fundraiser = cleanName(row.fundraiser);
+
+  const key = `${office}-${fundraiser}`;
+
+  if (!unique[key]) {
+    unique[key] = {
+      office,
+      fundraiser,
+      signups: Number(row.signups || 0)
+    };
+  }
+});
+
+const data = Object.values(unique)
   .filter(row => row.signups > 0)
   .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
-  render(data);
+
+render(data);
 }
 
 function render(data) {
