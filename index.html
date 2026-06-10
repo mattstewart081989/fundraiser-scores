@@ -270,7 +270,7 @@ async function loadScores() {
   document.getElementById("todayLabel").textContent = prettyDate(today);
 
   const url =
-    `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,created_at&report_type=eq.today&order=created_at.desc`;
+    `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,created_at&order=created_at.desc`;
 
   const res = await fetch(url, {
     headers: {
