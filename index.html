@@ -305,7 +305,10 @@ const totals = {};
 rows.forEach(row => {
   const office = row.office || "Unknown";
 
-  if (row.created_at !== latestTimeByOffice[office]) return;
+ const rowTime = new Date(row.created_at).getTime();
+const latestTime = new Date(latestTimeByOffice[office]).getTime();
+
+if (Math.abs(latestTime - rowTime) > 120000) return;
 
   const fundraiser = cleanName(row.fundraiser);
   const key = `${office}-${fundraiser}`;
