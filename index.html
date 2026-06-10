@@ -287,47 +287,14 @@ async function loadScores() {
     return;
   }
 
- const latestTimeByOffice = {};
-
-rows.forEach(row => {
-  const office = row.office || "Unknown";
-
-  if (
-    !latestTimeByOffice[office] ||
-    row.created_at > latestTimeByOffice[office]
-  ) {
-    latestTimeByOffice[office] = row.created_at;
-  }
-});
-
-const totals = {};
-
-rows.forEach(row => {
-  const office = row.office || "Unknown";
-
- const rowTime = new Date(row.created_at).getTime();
-const latestTime = new Date(latestTimeByOffice[office]).getTime();
-
-if (Math.abs(latestTime - rowTime) > 120000) return;
-
-  const fundraiser = cleanName(row.fundraiser);
-  const key = `${office}-${fundraiser}`;
-
-  if (!totals[key]) {
-    totals[key] = {
-      office,
-      fundraiser,
-      signups: 0
-    };
-  }
-
-  totals[key].signups += Number(row.signups || 0);
-});
-
-const data = Object.values(totals)
-    .filter(row => row.signups > 0)
-    .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
-
+ const data = rows
+  .map(row => ({
+    office: row.office || "Unknown",
+    fundraiser: cleanName(row.fundraiser),
+    signups: Number(row.signups || 0)
+  }))
+  .filter(row => row.signups > 0)
+  .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
   render(data);
 }
 
