@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="600" />
+  <title>Fundraiser Scores</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #273549;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --green: #22c55e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px 24px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 6px;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    main {
+      padding: 20px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .card .label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .card .value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .card .sub {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    thead {
+      background: var(--surface2);
+    }
+
+    th {
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    th.right, td.right { text-align: right; }
+
+    td {
+      padding: 11px 14px;
+      border-top: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr:hover {
+      background: var(--surface2);
+    }
+
+    .rank {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .name {
+      font-weight: 700;
+    }
+
+    .office {
+      color: var(--muted);
+    }
+
+    .score {
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px 20px;
+    }
+
+    @media (max-width: 700px) {
+      header { padding: 16px 14px 12px; }
+      main { padding: 14px; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      th, td { padding: 9px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><span class="live-dot"></span>Fundraiser Scores</h1>
+    <div class="status" id="lastUpdated">Loading…</div>
+  </header>
+
+  <main>
+    <section class="summary">
+      <div class="card">
+        <div class="label">Total Today</div>
+        <div class="value" id="totalToday">—</div>
+        <div class="sub">sign-ups</div>
+      </div>
+      <div class="card">
+        <div class="label">Fundraisers</div>
+        <div class="value" id="activeFundraisers">—</div>
+        <div class="sub">with sign-ups</div>
+      </div>
+      <div class="card">
+        <div class="label">Top Score</div>
+        <div class="value" id="topScore">—</div>
+        <div class="sub" id="topName">—</div>
+      </div>
+      <div class="card">
+        <div class="label">Date</div>
+        <div class="value" style="font-size:1.1rem" id="todayLabel">—</div>
+        <div class="sub">Europe/London</div>
+      </div>
+    </section>
+
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fundraiser</th>
+            <th>Office</th>
+            <th class="right">Today</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <tr><td colspan="4" class="empty">Loading scores…</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+<script>
+const SUPABASE_URL = "https://wafdruhsqrewxlazkyhr.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_DROshSZDOXW04SlzxDVCvQ_V457KHtC";
+
+function ukToday() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/London",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
+
+function prettyDate(dateStr) {
+  return new Date(dateStr + "T12:00:00").toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function cleanName(name) {
+  return String(name || "")
+    .replace(/\s+\d{3,6}$/, "")
+    .trim();
+}
+
+function updateTimestamp() {
+  document.getElementById("lastUpdated").textContent =
+    "Updated: " + new Date().toLocaleString("en-GB", {
+      timeZone: "Europe/London",
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      hour: "numeric",
+      minute: "2-digit"
+    }) + " BST";
+}
+
+async function loadScores() {
+  const today = ukToday();
+  document.getElementById("todayLabel").textContent = prettyDate(today);
+
+  const url =
+    `${SUPABASE_URL}/rest/v1/fundraiser_totals?select=office,fundraiser,signups,created_at&report_type=eq.today&report_date=eq.${today}&order=created_at.desc`;
+
+  const res = await fetch(url, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: "Bearer " + SUPABASE_ANON_KEY
+    }
+  });
+
+  const rows = await res.json();
+
+  if (!Array.isArray(rows)) {
+    console.error("Supabase error:", rows);
+    render([]);
+    return;
+  }
+
+  const latest = {};
+  rows.forEach(row => {
+    const key = `${row.office || ""}-${row.fundraiser || ""}`;
+    if (!latest[key]) latest[key] = row;
+  });
+
+  const data = Object.values(latest)
+    .map(row => ({
+      office: row.office || "Unknown",
+      fundraiser: cleanName(row.fundraiser),
+      signups: Number(row.signups || 0)
+    }))
+    .filter(row => row.signups > 0)
+    .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
+
+  render(data);
+}
+
+function render(data) {
+  const total = data.reduce((sum, row) => sum + row.signups, 0);
+  const top = data[0];
+
+  document.getElementById("totalToday").textContent = total;
+  document.getElementById("activeFundraisers").textContent = data.length;
+  document.getElementById("topScore").textContent = top ? top.signups : "—";
+  document.getElementById("topName").textContent = top ? top.fundraiser : "—";
+
+  const tbody = document.getElementById("leaderboardBody");
+  tbody.innerHTML = "";
+
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="empty">No sign-ups found for today yet.</td></tr>';
+    return;
+  }
+
+  data.forEach((row, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="rank">${index + 1}</td>
+      <td class="name">${row.fundraiser}</td>
+      <td class="office">${row.office}</td>
+      <td class="right score">${row.signups}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  updateTimestamp();
+  await loadScores();
+});
+</script>
+</body>
+</html>
