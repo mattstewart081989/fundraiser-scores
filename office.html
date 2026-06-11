@@ -84,7 +84,7 @@ Object.values(unique).forEach(row => {
   totals[row.office] = (totals[row.office] || 0) + row.signups;
 });
   
-  });
+
 
   const sorted = Object.entries(totals)
     .sort((a, b) => b[1] - a[1]);
