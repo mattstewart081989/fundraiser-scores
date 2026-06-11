@@ -40,7 +40,7 @@ async function loadOfficeScores() {
   };
 
   const formunautsUrl =
-    `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,signups,report_date&report_date=eq.${today}`;
+  `${SUPABASE_URL}/rest/v1/office_totals?select=office,total,report_week&report_week=eq.${today}`;
 
   const evergivingUrl =
     `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,supporters,report_date&report_date=eq.${today}`;
@@ -57,7 +57,7 @@ async function loadOfficeScores() {
 
   formunautsRows.forEach(row => {
     const office = row.office || "Unknown";
-    totals[office] = (totals[office] || 0) + Number(row.signups || 0);
+   totals[office] = (totals[office] || 0) + Number(row.total || 0);
   });
 
   evergivingRows.forEach(row => {
