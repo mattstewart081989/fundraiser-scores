@@ -30,7 +30,11 @@ function ukToday() {
     day: "2-digit"
   }).format(new Date());
 }
-
+function normaliseOffice(office) {
+  if (office === "Element A") return "Element";
+  return office;
+}
+  
 async function loadOfficeScores() {
   const today = ukToday();
 
@@ -57,7 +61,7 @@ async function loadOfficeScores() {
 const unique = {};
 
 formunautsRows.forEach(row => {
-  const office = row.office || "Unknown";
+ const office = normaliseOffice(row.office || "Unknown");
   const fundraiser = row.fundraiser || "Unknown";
   const key = `${office}-${fundraiser}`;
 
@@ -68,7 +72,7 @@ formunautsRows.forEach(row => {
 });
 
 evergivingRows.forEach(row => {
-  const office = row.office || "Unknown";
+  const office = normaliseOffice(row.office || "Unknown");
   const fundraiser = row.fundraiser || "Unknown";
   const key = `${office}-${fundraiser}`;
 
