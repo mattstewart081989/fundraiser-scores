@@ -279,7 +279,27 @@ async function loadScores() {
     }
   });
 
-  const rows = await res.json();
+  const formunautsRows = await res.json();
+
+const evergivingUrl =
+  `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,created_at,report_date&report_date=eq.${today}`;
+
+const evergivingRes = await fetch(evergivingUrl, {
+  headers: {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: "Bearer " + SUPABASE_ANON_KEY
+  }
+});
+
+const evergivingRows = await evergivingRes.json();
+
+const rows = [
+  ...formunautsRows,
+  ...evergivingRows.map(row => ({
+    ...row,
+    signups: row.supporters
+  }))
+];
 
   if (!Array.isArray(rows)) {
     console.error("Supabase error:", rows);
