@@ -297,7 +297,7 @@ const rows = [
   ...formunautsRows,
   ...evergivingRows.map(row => ({
     ...row,
-    signups: row.supporters
+    signups: Number(row.supporters || 0)
   }))
 ];
 
