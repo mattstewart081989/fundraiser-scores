@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Office Scores</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body style="font-family: Arial; background:#0f172a; color:white; padding:24px;">
+  <h1>Office Scores</h1>
+  <p id="updated"></p>
+
+  <table border="1" cellpadding="10" style="border-collapse:collapse; width:100%;">
+    <thead>
+      <tr>
+        <th>Office</th>
+        <th>Today</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+<script>
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+function ukToday() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/London",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
+
+async function loadOfficeScores() {
+  const today = ukToday();
+
+  const headers = {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: "Bearer " + SUPABASE_ANON_KEY
+  };
+
+  const formunautsUrl =
+    `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,signups,report_date&report_date=eq.${today}`;
+
+  const evergivingUrl =
+    `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,supporters,report_date&report_date=eq.${today}`;
+
+  const [formunautsRes, evergivingRes] = await Promise.all([
+    fetch(formunautsUrl, { headers }),
+    fetch(evergivingUrl, { headers })
+  ]);
+
+  const formunautsRows = await formunautsRes.json();
+  const evergivingRows = await evergivingRes.json();
+
+  const totals = {};
+
+  formunautsRows.forEach(row => {
+    const office = row.office || "Unknown";
+    totals[office] = (totals[office] || 0) + Number(row.signups || 0);
+  });
+
+  evergivingRows.forEach(row => {
+    const office = row.office || "Unknown";
+    totals[office] = (totals[office] || 0) + Number(row.supporters || 0);
+  });
+
+  const sorted = Object.entries(totals)
+    .sort((a, b) => b[1] - a[1]);
+
+  document.getElementById("rows").innerHTML = sorted.map(([office, total]) => `
+    <tr>
+      <td>${office}</td>
+      <td style="text-align:center; font-weight:bold;">${total}</td>
+    </tr>
+  `).join("");
+
+  document.getElementById("updated").textContent =
+    "Updated: " + new Date().toLocaleTimeString("en-GB");
+}
+
+loadOfficeScores();
+setInterval(loadOfficeScores, 60000);
+</script>
+</body>
+</html>
