@@ -284,6 +284,9 @@ async function loadScores() {
 const evergivingUrl =
   `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,created_at,report_date&report_date=eq.${today}`;
 
+  console.log("Today:", today);
+console.log("EverGiving URL:", evergivingUrl);
+
 const evergivingRes = await fetch(evergivingUrl, {
   headers: {
     apikey: SUPABASE_ANON_KEY,
