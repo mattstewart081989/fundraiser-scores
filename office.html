@@ -39,11 +39,12 @@ async function loadOfficeScores() {
     Authorization: "Bearer " + SUPABASE_ANON_KEY
   };
 
+  
   const formunautsUrl =
-  `${SUPABASE_URL}/rest/v1/office_totals?select=office,total,report_week&report_week=eq.${today}`;
+  `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,report_date&report_date=eq.${today}`;
 
   const evergivingUrl =
-    `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,supporters,report_date&report_date=eq.${today}`;
+  `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,report_date&report_date=eq.${today}`;
 
   const [formunautsRes, evergivingRes] = await Promise.all([
     fetch(formunautsUrl, { headers }),
@@ -53,16 +54,36 @@ async function loadOfficeScores() {
   const formunautsRows = await formunautsRes.json();
   const evergivingRows = await evergivingRes.json();
 
-  const totals = {};
+const unique = {};
 
-  formunautsRows.forEach(row => {
-    const office = row.office || "Unknown";
-   totals[office] = (totals[office] || 0) + Number(row.total || 0);
-  });
+formunautsRows.forEach(row => {
+  const office = row.office || "Unknown";
+  const fundraiser = row.fundraiser || "Unknown";
+  const key = `${office}-${fundraiser}`;
 
-  evergivingRows.forEach(row => {
-    const office = row.office || "Unknown";
-    totals[office] = (totals[office] || 0) + Number(row.supporters || 0);
+  unique[key] = {
+    office,
+    signups: Number(row.signups || 0)
+  };
+});
+
+evergivingRows.forEach(row => {
+  const office = row.office || "Unknown";
+  const fundraiser = row.fundraiser || "Unknown";
+  const key = `${office}-${fundraiser}`;
+
+  unique[key] = {
+    office,
+    signups: Number(row.supporters || 0)
+  };
+});
+
+const totals = {};
+
+Object.values(unique).forEach(row => {
+  totals[row.office] = (totals[row.office] || 0) + row.signups;
+});
+  
   });
 
   const sorted = Object.entries(totals)
