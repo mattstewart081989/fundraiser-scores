@@ -293,6 +293,9 @@ const evergivingRes = await fetch(evergivingUrl, {
 
 const evergivingRows = await evergivingRes.json();
 
+console.log("EverGiving response:", evergivingRows);
+console.log("EverGiving count:", evergivingRows.length);
+
 const rows = [
   ...formunautsRows,
   ...evergivingRows.map(row => ({
@@ -300,6 +303,10 @@ const rows = [
     signups: Number(row.supporters || 0)
   }))
 ];
+
+console.log("Combined count:", rows.length);
+console.log("Combined total:", rows.reduce((sum, r) => sum + Number(r.signups || 0), 0));
+
 
   if (!Array.isArray(rows)) {
     console.error("Supabase error:", rows);
