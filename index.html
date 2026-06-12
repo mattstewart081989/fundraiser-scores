@@ -207,7 +207,31 @@
         <div class="sub">Europe/London</div>
       </div>
     </section>
+<main>
 
+  <section class="cards">
+    ...
+  </section>
+
+  <div style="margin: 16px 0; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+    <label>
+      Day:
+      <input type="date" id="datePicker">
+    </label>
+
+    <label>
+      Range:
+      <select id="rangePicker">
+        <option value="day">Selected day</option>
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+      </select>
+    </label>
+
+    <button onclick="loadScores()">Apply</button>
+  </div>
+
+  <table>
     <section class="table-wrap">
       <table>
         <thead>
@@ -266,11 +290,23 @@ function updateTimestamp() {
 }
 
 async function loadScores() {
-  const today = ukToday();
-  document.getElementById("todayLabel").textContent = prettyDate(today);
+ const selectedDate = document.getElementById("datePicker").value || ukToday();
+const range = document.getElementById("rangePicker").value;
+
+document.getElementById("todayLabel").textContent = prettyDate(selectedDate);
+
+let dateFilter = `report_date=eq.${selectedDate}`;
+
+if (range !== "day") {
+  const start = new Date(selectedDate + "T00:00:00");
+  start.setDate(start.getDate() - (Number(range) - 1));
+  const startDate = start.toISOString().slice(0, 10);
+
+  dateFilter = `report_date=gte.${startDate}&report_date=lte.${selectedDate}`;
+}
 
   const url =
-     `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,created_at,report_date&report_date=eq.${today}&order=signups.desc`;
+     `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,created_at,report_date&${dateFilter}&order=signups.desc`;
 
   const res = await fetch(url, {
     headers: {
@@ -282,9 +318,9 @@ async function loadScores() {
   const formunautsRows = await res.json();
 
 const evergivingUrl =
-  `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,created_at,report_date&report_date=eq.${today}`;
+ `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,created_at,report_date&${dateFilter}`;
 
-  console.log("Today:", today);
+  console.log("Selected date:", selectedDate);
 console.log("EverGiving URL:", evergivingUrl);
 
 const evergivingRes = await fetch(evergivingUrl, {
