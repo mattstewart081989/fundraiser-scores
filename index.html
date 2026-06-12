@@ -359,7 +359,7 @@ rows.forEach(row => {
   const office = row.office || "Unknown";
   const fundraiser = cleanName(row.fundraiser);
 
-  const key = `${office}-${fundraiser}`;
+  const key = fundraiser;
 
   if (!unique[key]) {
     unique[key] = {
