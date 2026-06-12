@@ -8,6 +8,30 @@
   <h1>Office Scores</h1>
   <p id="updated"></p>
 
+<h1>Office Scores</h1>
+
+<p id="updated"></p>
+
+<div style="margin: 16px 0; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+  <label>
+    Day:
+    <input type="date" id="datePicker">
+  </label>
+
+  <label>
+    Range:
+    <select id="rangePicker">
+      <option value="day">Selected day</option>
+      <option value="7">Last 7 days</option>
+      <option value="30">Last 30 days</option>
+    </select>
+  </label>
+
+  <button onclick="loadOfficeScores()">Apply</button>
+</div>
+
+<table>
+  
   <table border="1" cellpadding="10" style="border-collapse:collapse; width:100%;">
     <thead>
       <tr>
@@ -36,7 +60,23 @@ function normaliseOffice(office) {
 }
   
 async function loadOfficeScores() {
-  const today = ukToday();
+  const selectedDate =
+  document.getElementById("datePicker").value || ukToday();
+
+const range =
+  document.getElementById("rangePicker").value;
+
+let dateFilter = `report_date=eq.${selectedDate}`;
+
+if (range !== "day") {
+  const start = new Date(selectedDate + "T00:00:00");
+  start.setDate(start.getDate() - (Number(range) - 1));
+
+  const startDate = start.toISOString().slice(0, 10);
+
+  dateFilter =
+    `report_date=gte.${startDate}&report_date=lte.${selectedDate}`;
+}
 
   const headers = {
     apikey: SUPABASE_ANON_KEY,
@@ -45,10 +85,10 @@ async function loadOfficeScores() {
 
   
   const formunautsUrl =
-  `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,report_date&report_date=eq.${today}`;
+  `${SUPABASE_URL}/rest/v1/fundraiser_scores?select=office,fundraiser,signups,report_date&${dateFilter}`;
 
   const evergivingUrl =
-  `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,report_date&report_date=eq.${today}`;
+  `${SUPABASE_URL}/rest/v1/evergiving_scores?select=office,fundraiser,supporters,report_date&${dateFilter}`;
 
   const [formunautsRes, evergivingRes] = await Promise.all([
     fetch(formunautsUrl, { headers }),
@@ -104,8 +144,11 @@ Object.values(unique).forEach(row => {
     "Updated: " + new Date().toLocaleTimeString("en-GB");
 }
 
-loadOfficeScores();
-setInterval(loadOfficeScores, 60000);
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("datePicker").value = ukToday();
+  loadOfficeScores();
+});
 </script>
 </body>
 </html>
