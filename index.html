@@ -486,15 +486,15 @@ label {
 
 .summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
-  gap: 10px;
-  overflow-x: visible;
-  margin: 14px -10px 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin: 14px 0 20px;
 }
 
 .summary .card {
-  min-width: 0;
-  padding: 12px 10px;
+  width: 100%;
+  padding: 12px 8px;
 }
 
 main {
@@ -507,6 +507,15 @@ main {
 .podium-container,
 .table-wrap {
   width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.filters {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
   .podium-card {
