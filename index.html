@@ -220,12 +220,17 @@ body {
       margin: 0 auto;
     }
 
-    .summary {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(140px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+ .summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+    .summary .card {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 8px;
+}
 
     .card {
   background: rgba(17,17,17,0.9);
