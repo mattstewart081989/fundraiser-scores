@@ -452,9 +452,8 @@ label {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   overflow-x: visible;
-  margin: 16px 0 24px;
+  margin: 16px -10px 24px;
 }
-
 .summary {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
@@ -486,8 +485,11 @@ label {
 
 
 .summary {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 10px;
+  overflow-x: visible;
+  margin: 14px -10px 20px;
 }
 
 .summary .card {
