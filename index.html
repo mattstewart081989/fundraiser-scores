@@ -473,13 +473,24 @@ label {
     overflow-x: visible;
     margin: 16px 0 24px;
   }
-  .summary .card:nth-child(4) {
-  display: none;
-}
+
 
 .summary {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.summary .card {
+  min-width: 0;
+  padding: 12px 10px;
+}
+
+.summary .card .label {
+  font-size: 0.62rem;
+}
+
+.summary .card .value {
+  font-size: 1.25rem;
 }
 
   .podium-card {
