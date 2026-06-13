@@ -26,6 +26,40 @@
       min-height: 100vh;
     }
 
+.podium-container{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin:20px 0 30px;
+}
+
+.podium-card{
+  background:#1b2430;
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+  min-width:180px;
+}
+
+.gold{
+  border:2px solid gold;
+  transform:translateY(-10px);
+}
+
+.silver{
+  border:2px solid silver;
+}
+
+.bronze{
+  border:2px solid #cd7f32;
+}
+
+.place{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+    
     header {
       padding: 20px 24px 14px;
       border-bottom: 1px solid var(--border);
@@ -231,7 +265,29 @@
     <button onclick="loadScores()">Apply</button>
   </div>
 
-  
+  </div>
+
+<div id="podium" class="podium-container">
+  <div class="podium-card silver">
+    <div class="place">🥈 2nd</div>
+    <div id="secondName">-</div>
+    <div id="secondScore">0</div>
+  </div>
+
+  <div class="podium-card gold">
+    <div class="place">🥇 1st</div>
+    <div id="firstName">-</div>
+    <div id="firstScore">0</div>
+  </div>
+
+  <div class="podium-card bronze">
+    <div class="place">🥉 3rd</div>
+    <div id="thirdName">-</div>
+    <div id="thirdScore">0</div>
+  </div>
+</div>
+
+<section class="table-wrap">
     <section class="table-wrap">
       <table>
         <thead>
@@ -367,6 +423,8 @@ console.log("Combined total:", rows.reduce((sum, r) => sum + Number(r.signups ||
 
 const unique = {};
 
+
+  
 rows.forEach(row => {
   const office = row.office || "Unknown";
   const fundraiser = cleanName(row.fundraiser);
@@ -387,16 +445,25 @@ const data = Object.values(unique)
   .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
 
 render(data);
+
 }
 
 function render(data) {
   const total = data.reduce((sum, row) => sum + row.signups, 0);
-  const top = data[0];
+ const top = data[0];
 
-  document.getElementById("totalToday").textContent = total;
-  document.getElementById("activeFundraisers").textContent = data.length;
-  document.getElementById("topScore").textContent = top ? top.signups : "—";
-  document.getElementById("topName").textContent = top ? top.fundraiser : "—";
+const first = data[0];
+const second = data[1];
+const third = data[2];
+
+document.getElementById("firstName").textContent = first?.fundraiser || "-";
+document.getElementById("firstScore").textContent = first?.signups || 0;
+
+document.getElementById("secondName").textContent = second?.fundraiser || "-";
+document.getElementById("secondScore").textContent = second?.signups || 0;
+
+document.getElementById("thirdName").textContent = third?.fundraiser || "-";
+document.getElementById("thirdScore").textContent = third?.signups || 0;
 
   const tbody = document.getElementById("leaderboardBody");
   tbody.innerHTML = "";
