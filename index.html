@@ -59,7 +59,24 @@
 .social-link:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 15px rgba(255,212,0,.4);
+
 }      
+
+      @keyframes socialPulse {
+  0%, 90%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255,212,0,0);
+  }
+
+  95% {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255,212,0,0.8);
+  }
+}
+
+.social-link {
+  animation: socialPulse 4s infinite;
+}
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
