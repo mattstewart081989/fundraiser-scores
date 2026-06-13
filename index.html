@@ -660,23 +660,19 @@ h1 {
     ...
   </section>
 
-  <div style="margin: 16px 0; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-    <label>
-      Day:
-      <input type="date" id="datePicker">
-    </label>
+ <div class="filters">
 
-    <label>
-      Range:
-      <select id="rangePicker">
-        <option value="day">Selected day</option>
-        <option value="7">Last 7 days</option>
-        <option value="30">Last 30 days</option>
-      </select>
-    </label>
+  <input type="date" id="datePicker">
 
-    <button onclick="loadScores()">Apply</button>
-  </div>
+  <select id="rangePicker">
+    <option value="day">Selected day</option>
+    <option value="7">Last 7 days</option>
+    <option value="30">Last 30 days</option>
+  </select>
+
+  <button onclick="loadScores()">Apply</button>
+
+</div>
 
   </div>
 
