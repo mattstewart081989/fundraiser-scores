@@ -100,6 +100,17 @@ body {
   background: rgba(205, 127, 50, 0.08);
 }
 
+    .office-badge {
+  display: inline-block;
+  background: rgba(255,212,0,0.08);
+  border: 1px solid #ffd400;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffd400;
+}
+
 .place{
   font-size:20px;
   font-weight:bold;
@@ -580,7 +591,9 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
   tr.innerHTML = `
       <td class="rank">${index + 1}</td>
       <td class="name">${row.fundraiser}</td>
-      <td class="office">${row.office}</td>
+      <td>
+  <span class="office-badge">${row.office}</span>
+</td>
       <td class="right score">${row.signups}</td>
     `;
     tbody.appendChild(tr);
