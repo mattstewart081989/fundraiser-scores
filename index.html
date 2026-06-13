@@ -455,7 +455,6 @@ const data = Object.values(unique)
   .filter(row => row.signups > 0)
   .sort((a, b) => b.signups - a.signups || a.fundraiser.localeCompare(b.fundraiser));
 
-render(data);
 
 
 function render(data) {
