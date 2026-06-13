@@ -339,10 +339,18 @@ console.log("EverGiving count:", evergivingRows.length);
   console.log("EverGiving total:", evergivingRows.reduce((sum, r) => sum + Number(r.supporters || 0), 0));
 console.log("Formunauts total:", formunautsRows.reduce((sum, r) => sum + Number(r.signups || 0), 0));
 
+function normaliseOffice(office) {
+  return office === "River NW B" ? "River NW" : office;
+}
+
 const rows = [
-  ...formunautsRows,
+  ...formunautsRows.map(row => ({
+    ...row,
+    office: normaliseOffice(row.office)
+  })),
   ...evergivingRows.map(row => ({
     ...row,
+    office: normaliseOffice(row.office),
     signups: Number(row.supporters || 0)
   }))
 ];
