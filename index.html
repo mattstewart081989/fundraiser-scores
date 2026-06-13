@@ -337,6 +337,33 @@ label {
   transform: scale(1.08) translateY(-4px);
 }
 
+    @keyframes beeFly {
+  0% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  25% {
+    transform: translateX(8px) translateY(-4px);
+  }
+
+  50% {
+    transform: translateX(16px) translateY(0px);
+  }
+
+  75% {
+    transform: translateX(8px) translateY(4px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+.bee {
+  display: inline-block;
+  animation: beeFly 3s ease-in-out infinite;
+}
+
     @media (min-width: 701px) {
   .podium-container {
     display: grid;
@@ -392,7 +419,10 @@ label {
   <header>
     <div class="header-brand">
   <img src="./thehivelinqlogo.png" alt="Hive Logo" class="logo">
-  <h1>Hive Leaderboard 🐝</h1>
+  <h1>
+  HIVE LEADERBOARD
+  <span class="bee">🐝</span>
+</h1>
 </div>
     <div class="status" id="lastUpdated">Loading…</div>
   </header>
