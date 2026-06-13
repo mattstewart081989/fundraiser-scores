@@ -61,9 +61,21 @@ body {
   min-width:180px;
 }
 
+@keyframes goldPulse {
+  0%, 100% {
+    border-color: #ffd400;
+    box-shadow: 0 0 8px rgba(255,212,0,0.4);
+  }
+
+  50% {
+    border-color: #fff176;
+    box-shadow: 0 0 30px rgba(255,212,0,1);
+  }
+}
+
 .gold{
-  border:2px solid gold;
-  transform:translateY(-10px);
+  border: 2px solid #ffd400;
+  animation: goldPulse 1.5s infinite;
 }
 
 .silver{
