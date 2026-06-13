@@ -300,19 +300,25 @@ thead th {
 
     @media (min-width: 701px) {
   .podium-container {
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: 1fr 1.25fr 1fr;
+    gap: 18px;
+    align-items: center;
+    margin: 24px 0 28px;
+  }
+
+  .podium-card {
+    min-height: 120px;
+    padding: 18px 14px;
   }
 
   .gold {
-    min-height: 180px;
+    min-height: 145px;
   }
 
-  .silver {
-    min-height: 150px;
-  }
-
+  .silver,
   .bronze {
-    min-height: 130px;
+    min-height: 115px;
   }
 }
 
