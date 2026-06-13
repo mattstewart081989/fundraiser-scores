@@ -220,16 +220,21 @@ body {
       margin: 0 auto;
     }
 
- .summary {
+.summary {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  width: 100%;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 10px;
+  overflow-x: visible;
+  margin: 14px 0 20px;
 }
-    .summary .card {
-  width: 100%;
-  min-width: 0;
-  padding: 12px 8px;
+
+.summary .card {
+  min-width: 120px;
+  padding: 14px 12px;
+}
+
+.summary .card:nth-child(4) {
+  display: none !important;
 }
 
     .card {
@@ -490,13 +495,7 @@ label {
   padding: 12px 10px;
 }
 
-.summary .card .label {
-  font-size: 0.62rem;
-}
 
-.summary .card .value {
-  font-size: 1.25rem;
-}
 
   .podium-card {
     min-width: 0;
