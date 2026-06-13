@@ -77,16 +77,17 @@ body {
   border: 2px solid #ffd400;
   animation: goldPulse 1.5s infinite;
   transform: scale(1.08);
-  z-index: 2;
-  position: relative;
+  min-height: 180px;
 }
 
-.silver{
-  border:2px solid silver;
+.silver {
+  border: 2px solid silver;
+  min-height: 150px;
 }
 
-.bronze{
-  border:2px solid #cd7f32;
+.bronze {
+  border: 2px solid #cd7f32;
+  min-height: 130px;
 }
     .rank-1 {
   background: rgba(255, 212, 0, 0.08);
@@ -278,6 +279,42 @@ thead th {
       color: var(--muted);
       padding: 40px 20px;
     }
+
+    .card,
+.podium-card {
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.silver:hover,
+.bronze:hover {
+  transform: translateY(-4px);
+}
+
+.gold:hover {
+  transform: scale(1.08) translateY(-4px);
+}
+
+    @media (min-width: 701px) {
+  .podium-container {
+    align-items: flex-end;
+  }
+
+  .gold {
+    min-height: 180px;
+  }
+
+  .silver {
+    min-height: 150px;
+  }
+
+  .bronze {
+    min-height: 130px;
+  }
+}
 
 @media (max-width: 700px) {
   .podium-container {
