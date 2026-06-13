@@ -215,43 +215,31 @@
       padding: 40px 20px;
     }
 
-  @media (max-width: 700px) {
-  header {
-    align-items: flex-start;
-  }
-
-  main {
-    padding: 14px;
-    overflow-x: hidden;
-  }
-
-  .summary {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
+@media (max-width: 700px) {
   .podium-container {
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    overflow-x: visible;
     margin: 16px 0 24px;
   }
 
   .podium-card {
-    min-width: 170px;
-    flex: 0 0 170px;
-  }
-
-  .table-wrap {
+    min-width: 0;
     width: 100%;
-    overflow-x: auto;
+    padding: 10px 6px;
+    font-size: 0.8rem;
   }
 
-  table {
-    min-width: 620px;
+  .podium-card .place {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .gold {
+    transform: none;
   }
 }
-    }
   </style>
 </head>
 <body>
