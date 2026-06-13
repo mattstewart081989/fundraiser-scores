@@ -73,9 +73,12 @@ body {
   }
 }
 
-.gold{
+.gold {
   border: 2px solid #ffd400;
   animation: goldPulse 1.5s infinite;
+  transform: scale(1.08);
+  z-index: 2;
+  position: relative;
 }
 
 .silver{
@@ -84,6 +87,17 @@ body {
 
 .bronze{
   border:2px solid #cd7f32;
+}
+    .rank-1 {
+  background: rgba(255, 212, 0, 0.08);
+}
+
+.rank-2 {
+  background: rgba(192, 192, 192, 0.08);
+}
+
+.rank-3 {
+  background: rgba(205, 127, 50, 0.08);
 }
 
 .place{
@@ -557,8 +571,13 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
   }
 
   data.forEach((row, index) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+  const tr = document.createElement("tr");
+
+  if (index === 0) tr.classList.add("rank-1");
+  if (index === 1) tr.classList.add("rank-2");
+  if (index === 2) tr.classList.add("rank-3");
+
+  tr.innerHTML = `
       <td class="rank">${index + 1}</td>
       <td class="name">${row.fundraiser}</td>
       <td class="office">${row.office}</td>
