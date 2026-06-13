@@ -363,7 +363,32 @@ label {
   display: inline-block;
   animation: beeFly 3s ease-in-out infinite;
 }
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: splashFade 1.8s ease forwards;
+}
 
+#splash img {
+  width: 180px;
+  animation: logoPulse 1.2s ease-in-out;
+}
+
+@keyframes logoPulse {
+  0% { transform: scale(0.7); opacity: 0; }
+  40% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes splashFade {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
     @media (min-width: 701px) {
   .podium-container {
     display: grid;
@@ -416,6 +441,9 @@ label {
   </style>
 </head>
 <body>
+  <div id="splash">
+  <img src="thehivelinqlogo.png" alt="Hive Linq Logo">
+</div>
   <header>
     <div class="header-brand">
   <img src="./thehivelinqlogo.png" alt="Hive Logo" class="logo">
