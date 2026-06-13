@@ -215,11 +215,42 @@
       padding: 40px 20px;
     }
 
-    @media (max-width: 700px) {
-      header { padding: 16px 14px 12px; }
-      main { padding: 14px; }
-      .summary { grid-template-columns: repeat(2, 1fr); }
-      th, td { padding: 9px 10px; }
+  @media (max-width: 700px) {
+  header {
+    align-items: flex-start;
+  }
+
+  main {
+    padding: 14px;
+    overflow-x: hidden;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .podium-container {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin: 16px 0 24px;
+  }
+
+  .podium-card {
+    min-width: 170px;
+    flex: 0 0 170px;
+  }
+
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 620px;
+  }
+}
     }
   </style>
 </head>
