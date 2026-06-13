@@ -461,6 +461,11 @@ function render(data) {
   const total = data.reduce((sum, row) => sum + row.signups, 0);
  const top = data[0];
 
+document.getElementById("totalToday").textContent = total;
+document.getElementById("activeFundraisers").textContent = data.length;
+document.getElementById("topScore").textContent = top ? top.signups : "-";
+document.getElementById("topName").textContent = top ? top.fundraiser : "-";
+  
 const first = data[0];
 const second = data[1];
 const third = data[2];
