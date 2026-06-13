@@ -222,15 +222,18 @@ body {
 
 .summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
-  gap: 10px;
-  overflow-x: visible;
-  margin: 14px 0 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+
+  width: calc(100vw - 20px);
+  margin-left: -10px;
+
 }
 
 .summary .card {
-  min-width: 120px;
-  padding: 14px 12px;
+  width: 100%;
+  min-width: 0;
+
 }
 
 .summary .card:nth-child(4) {
