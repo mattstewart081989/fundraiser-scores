@@ -899,11 +899,11 @@ h1 {
 
   <main>
     <section class="summary">
-      <div class="card">
-        <div class="label">Total Today</div>
-        <div class="value" id="totalToday">—</div>
-        <div class="sub">sign-ups</div>
-      </div>
+     <div class="card">
+  <div class="label">Latest Sign-Up</div>
+  <div class="value" id="latestSignup">—</div>
+  <div class="sub">most recent</div>
+</div>
       <div class="card">
         <div class="label">Fundraisers</div>
         <div class="value" id="activeFundraisers">—</div>
@@ -1143,8 +1143,8 @@ document.getElementById("latestSignup").textContent =
   
 document.getElementById("totalToday").textContent = total;
 document.getElementById("activeFundraisers").textContent = data.length;
-document.getElementById("topScore").textContent = top ? top.signups : "-";
-document.getElementById("topName").textContent = top ? top.fundraiser : "-";
+document.getElementById("latestSignup").textContent =
+  latest ? latest.fundraiser : "-";
   
 const first = data[0];
 const second = data[1];
