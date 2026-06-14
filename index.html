@@ -1159,46 +1159,44 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
 document.addEventListener("DOMContentLoaded", async () => {
   updateTimestamp();
   await loadScores();
-});
-window.addEventListener("load", () => {
-  const bee = document.getElementById("bee");
-  const socials = document.querySelectorAll(".social-link");
+});window.addEventListener("load", () => {
+  setTimeout(() => {
+    const bee = document.getElementById("bee");
+    const socials = document.querySelectorAll(".social-link");
 
-  if (socials.length < 2) return;
+    if (!bee || socials.length < 2) return;
 
-  const beeRect = bee.getBoundingClientRect();
-  const instaRect = socials[0].getBoundingClientRect();
-  const linkedinRect = socials[1].getBoundingClientRect();
+    bee.style.animation = "none";
 
-  const startX = 0;
-  const startY = 0;
+    const beeRect = bee.getBoundingClientRect();
+    const instaRect = socials[0].getBoundingClientRect();
+    const linkedinRect = socials[1].getBoundingClientRect();
 
-  const instaX = instaRect.left - beeRect.left;
-  const instaY = instaRect.top - beeRect.top;
+    const instaX = instaRect.left - beeRect.left + 10;
+    const instaY = instaRect.top - beeRect.top + 10;
 
-  const linkedinX = linkedinRect.left - beeRect.left;
-  const linkedinY = linkedinRect.top - beeRect.top;
+    const linkedinX = linkedinRect.left - beeRect.left + 10;
+    const linkedinY = linkedinRect.top - beeRect.top + 10;
 
-  bee.animate(
-    [
-      { transform: `translate(0px, 0px)` },
+    const animation = bee.animate(
+      [
+        { transform: "translate(0, 0)" },
+        { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.22 },
+        { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.50 },
+        { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.68 },
+        { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.85 },
+        { transform: "translate(0, 0)" }
+      ],
+      {
+        duration: 7000,
+        easing: "ease-in-out"
+      }
+    );
 
-      { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.2 },
-
-      { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.45 },
-
-      { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.65 },
-
-      { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.85 },
-
-      { transform: `translate(0px, 0px)` }
-    ],
-    {
-      duration: 7000,
-      easing: "ease-in-out",
-      fill: "forwards"
-    }
-  );
+    animation.onfinish = () => {
+      bee.style.animation = "beeFly 3s ease-in-out infinite";
+    };
+  }, 2000);
 });
 </script>
 </body>
