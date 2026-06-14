@@ -1173,8 +1173,8 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
 document.addEventListener("DOMContentLoaded", async () => {
   updateTimestamp();
   await loadScores();
-})
-  
+});
+
 setTimeout(() => {
   const bee = document.getElementById("bee");
 
@@ -1183,10 +1183,12 @@ setTimeout(() => {
     return;
   }
 
- bee.style.transition = "transform 2s ease-in-out";
-bee.style.transform = "translate(200px,
+  bee.style.transition = "transform 2s ease-in-out";
+  bee.style.transform = "translate(200px, 80px)";
 }, 3000);
-});
+</script>
+  
+
 </script>
 </body>
 </html>
