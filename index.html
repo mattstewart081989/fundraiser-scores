@@ -1177,19 +1177,42 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 setTimeout(() => {
   const bee = document.getElementById("bee");
+  const socials = document.querySelectorAll(".social-link");
 
-  if (!bee) return;
+  if (!bee || socials.length < 2) return;
 
   bee.style.animation = "none";
-  bee.style.transition = "transform 2s ease-in-out";
-  bee.style.transform = "translate(-180px, 80px)";
 
-  setTimeout(() => {
-    bee.style.transform = "translate(0,0)";
+  const beeRect = bee.getBoundingClientRect();
+  const instaRect = socials[0].getBoundingClientRect();
+  const linkedinRect = socials[1].getBoundingClientRect();
+
+  const instaX = instaRect.left - beeRect.left;
+  const instaY = instaRect.top - beeRect.top;
+
+  const linkedinX = linkedinRect.left - beeRect.left;
+  const linkedinY = linkedinRect.top - beeRect.top;
+
+  const flight = bee.animate(
+    [
+      { transform: "translate(0, 0)" },
+      { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.25 },
+      { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.55 },
+      { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.7 },
+      { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.85 },
+      { transform: "translate(0, 0)" }
+    ],
+    {
+      duration: 8000,
+      easing: "ease-in-out"
+    }
+  );
+
+  flight.onfinish = () => {
     bee.style.animation = "beeFly 3s ease-in-out infinite";
-  }, 5000);
+  };
 
-}, 3000);
+}, 2500);
 </script>
   
 
