@@ -839,6 +839,15 @@ h1 {
 #bee.bee-trip {
   animation: beeSocialTrip 6s ease-in-out 1 !important;
 }
+    @media (max-width: 700px) {
+  .latest-card {
+    grid-column: 1 / -1;
+  }
+
+  #latestSignup {
+    font-size: 1.2rem !important;
+  }
+}
   </style>
 </head>
 <body>
@@ -901,15 +910,22 @@ h1 {
         <div class="sub">with sign-ups</div>
       </div>
       <div class="card">
-        <div class="label">Top Score</div>
-        <div class="value" id="topScore">—</div>
-        <div class="sub" id="topName">—</div>
-      </div>
-      <div class="card">
-        <div class="label">Date</div>
-        <div class="value" style="font-size:1.1rem" id="todayLabel">—</div>
-        <div class="sub">Europe/London</div>
-      </div>
+  <div class="label">Top Score</div>
+  <div class="value" id="topScore">—</div>
+  <div class="sub" id="topName">—</div>
+</div>
+
+<div class="card latest-card">
+  <div class="label">Latest Sign-Up</div>
+  <div class="value" id="latestSignup">—</div>
+  <div class="sub">most recent</div>
+</div>
+
+<div class="card">
+  <div class="label">Date</div>
+  <div class="value" style="font-size:1.1rem" id="todayLabel">—</div>
+  <div class="sub">Europe/London</div>
+</div>
     </section>
 
 
@@ -1118,6 +1134,13 @@ function render(data) {
   const total = data.reduce((sum, row) => sum + row.signups, 0);
  const top = data[0];
 
+const latest = rows
+  .filter(row => Number(row.signups || 0) > 0)
+  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+
+document.getElementById("latestSignup").textContent =
+  latest ? latest.fundraiser : "-";
+  
 document.getElementById("totalToday").textContent = total;
 document.getElementById("activeFundraisers").textContent = data.length;
 document.getElementById("topScore").textContent = top ? top.signups : "-";
