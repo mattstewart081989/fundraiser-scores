@@ -825,6 +825,16 @@ h1 {
     table-layout: fixed !important;
   }
 }
+    @keyframes beeSocialTrip {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(120px, 60px); }
+  60% { transform: translate(120px, 60px); }
+  100% { transform: translate(0, 0); }
+}
+
+#bee.bee-trip {
+  animation: beeSocialTrip 6s ease-in-out 1 !important;
+}
   </style>
 </head>
 <body>
@@ -1159,44 +1169,21 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
 document.addEventListener("DOMContentLoaded", async () => {
   updateTimestamp();
   await loadScores();
-});window.addEventListener("load", () => {
+})
+  
+window.addEventListener("load", () => {
   setTimeout(() => {
     const bee = document.getElementById("bee");
-    const socials = document.querySelectorAll(".social-link");
+    if (!bee) return;
 
-    if (!bee || socials.length < 2) return;
+    bee.classList.add("bee-trip");
 
-    bee.style.animation = "none";
-
-    const beeRect = bee.getBoundingClientRect();
-    const instaRect = socials[0].getBoundingClientRect();
-    const linkedinRect = socials[1].getBoundingClientRect();
-
-    const instaX = instaRect.left - beeRect.left + 10;
-    const instaY = instaRect.top - beeRect.top + 10;
-
-    const linkedinX = linkedinRect.left - beeRect.left + 10;
-    const linkedinY = linkedinRect.top - beeRect.top + 10;
-
-    const animation = bee.animate(
-      [
-        { transform: "translate(0, 0)" },
-        { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.22 },
-        { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.50 },
-        { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.68 },
-        { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.85 },
-        { transform: "translate(0, 0)" }
-      ],
-      {
-        duration: 7000,
-        easing: "ease-in-out"
-      }
-    );
-
-    animation.onfinish = () => {
+    setTimeout(() => {
+      bee.classList.remove("bee-trip");
       bee.style.animation = "beeFly 3s ease-in-out infinite";
-    };
-  }, 2000);
+    }, 6000);
+
+  }, 2200);
 });
 </script>
 </body>
