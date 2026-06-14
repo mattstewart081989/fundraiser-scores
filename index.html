@@ -848,6 +848,19 @@ h1 {
     font-size: 1.2rem !important;
   }
 }
+    @keyframes latestFlash {
+  0%,100% {
+    box-shadow: 0 0 0 rgba(255,212,0,0);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(255,212,0,1);
+  }
+}
+
+.latest-card {
+  animation: latestFlash 3s infinite;
+}
   </style>
 </head>
 <body>
