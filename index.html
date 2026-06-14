@@ -695,20 +695,74 @@ h1 {
     display: none !important;
   }
 }
-@media (max-width: 700px) {
+    @media (max-width: 700px) {
+  main {
+    width: 100vw;
+    max-width: none;
+    padding: 0 12px;
+  }
+
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 14px 0 20px;
+  }
+
+  .summary .card:nth-child(4) {
+    display: none !important;
+  }
+
+  .filters {
+    margin: 8px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .filters input {
+    width: 130px;
+    height: 42px;
+  }
+
+  .filters select {
+    width: 145px;
+    height: 42px;
+  }
+
+  .filters button {
+    height: 42px;
+    white-space: nowrap;
+  }
+
+  .podium-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 14px 0 20px;
+  }
+
   .podium-card {
-    min-height: 95px !important;
-    padding: 8px 4px !important;
-    font-size: 0.75rem !important;
+    min-width: 0;
+    width: 100%;
+    min-height: 105px;
+    padding: 10px 6px;
+    font-size: 0.8rem;
   }
 
-  .podium-card .place {
-    font-size: 0.85rem !important;
-    margin-bottom: 4px !important;
+  .gold {
+    transform: none;
   }
 
-  .podium-card .score {
-    font-size: 0.9rem !important;
+  .table-wrap {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
   }
 }
 
@@ -830,8 +884,7 @@ h1 {
 </div>
 
 <section class="table-wrap">
-    <section class="table-wrap">
-      <table>
+  <table>
         <thead>
           <tr>
             <th>#</th>
