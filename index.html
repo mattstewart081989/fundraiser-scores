@@ -414,6 +414,31 @@ label {
   100% {
     transform: translateX(0px) translateY(0px);
   }
+      @keyframes beeIntro {
+  0% {
+    transform: translate(0,0);
+  }
+
+  25% {
+    transform: translate(-250px,40px);
+  }
+
+  50% {
+    transform: translate(-200px,40px);
+  }
+
+  75% {
+    transform: translate(0,0);
+  }
+
+  100% {
+    transform: translate(0,0);
+  }
+}
+
+.bee-intro {
+  animation: beeIntro 4s ease-in-out forwards;
+}
 }
 
 .bee {
@@ -836,7 +861,7 @@ h1 {
     <div class="header-brand">
   <img src="./thehivelinqlogo.png" alt="Hive Logo" class="logo">
   <h1>
-  HIVE LEADERBOARD <span class="bee">🐝</span>
+  HIVE LEADERBOARD <span class="bee bee-intro">🐝</span>
 </h1>
 </div>
    <div class="header-right">
@@ -1160,6 +1185,14 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
 document.addEventListener("DOMContentLoaded", async () => {
   updateTimestamp();
   await loadScores();
+});
+  window.addEventListener("load", () => {
+  const bee = document.querySelector(".bee");
+
+  setTimeout(() => {
+    bee.classList.remove("bee-intro");
+    bee.style.animation = "beeFly 3s ease-in-out infinite";
+  }, 4000);
 });
 </script>
 </body>
