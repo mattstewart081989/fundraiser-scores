@@ -862,16 +862,7 @@ h1 {
   animation: latestFlash 1.5s infinite;
 }
 
-    .activity-card {
-  margin-bottom: 12px;
-}
-
-#latestActivity {
-  margin-top: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-}
+   
   </style>
 </head>
 <body>
@@ -1163,16 +1154,10 @@ const latest = rows
   .filter(row => Number(row.signups || 0) > 0)
   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
 
-document.getElementById("latestSignup").textContent =
-  latest ? latest.fundraiser : "-";
+
   
 document.getElementById("totalToday").textContent = total;
 document.getElementById("activeFundraisers").textContent = data.length;
-
-  document.getElementById("latestActivity").textContent =
-  latest
-    ? `${latest.fundraiser} just got a sign-up`
-    : "Waiting for sign-ups...";
 
   
 const first = data[0];
