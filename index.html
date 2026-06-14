@@ -834,8 +834,8 @@ h1 {
   <header>
     <div class="header-brand">
   <img src="./thehivelinqlogo.png" alt="Hive Logo" class="logo">
-  <h1>
-  HIVE LEADERBOARD <span class="bee">🐝</span>
+<h1>
+  HIVE LEADERBOARD <span id="bee" class="bee">🐝</span>
 </h1>
 </div>
    <div class="header-right">
@@ -1160,13 +1160,45 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateTimestamp();
   await loadScores();
 });
-  window.addEventListener("load", () => {
-  const bee = document.querySelector(".bee");
+window.addEventListener("load", () => {
+  const bee = document.getElementById("bee");
+  const socials = document.querySelectorAll(".social-link");
 
-  setTimeout(() => {
-    bee.classList.remove("bee-intro");
-    bee.style.animation = "beeFly 3s ease-in-out infinite";
-  }, 4000);
+  if (socials.length < 2) return;
+
+  const beeRect = bee.getBoundingClientRect();
+  const instaRect = socials[0].getBoundingClientRect();
+  const linkedinRect = socials[1].getBoundingClientRect();
+
+  const startX = 0;
+  const startY = 0;
+
+  const instaX = instaRect.left - beeRect.left;
+  const instaY = instaRect.top - beeRect.top;
+
+  const linkedinX = linkedinRect.left - beeRect.left;
+  const linkedinY = linkedinRect.top - beeRect.top;
+
+  bee.animate(
+    [
+      { transform: `translate(0px, 0px)` },
+
+      { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.2 },
+
+      { transform: `translate(${instaX}px, ${instaY}px)`, offset: 0.45 },
+
+      { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.65 },
+
+      { transform: `translate(${linkedinX}px, ${linkedinY}px)`, offset: 0.85 },
+
+      { transform: `translate(0px, 0px)` }
+    ],
+    {
+      duration: 7000,
+      easing: "ease-in-out",
+      fill: "forwards"
+    }
+  );
 });
 </script>
 </body>
