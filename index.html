@@ -268,11 +268,12 @@ body {
     }
 
     .table-wrap {
-      overflow-x: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: hidden;
+}
 
     table {
       width: 100%;
@@ -504,8 +505,12 @@ main {
 .summary,
 .podium-container,
 .table-wrap {
-  width: 100%;
-  overflow-x: hidden !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+table {
+  width: 100% !important;
 }
 
 table {
