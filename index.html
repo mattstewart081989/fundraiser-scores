@@ -1180,11 +1180,13 @@ setTimeout(() => {
 
   if (!bee) return;
 
+  bee.style.animation = "none";
   bee.style.transition = "transform 2s ease-in-out";
   bee.style.transform = "translate(-180px, 80px)";
 
   setTimeout(() => {
     bee.style.transform = "translate(0,0)";
+    bee.style.animation = "beeFly 3s ease-in-out infinite";
   }, 5000);
 
 }, 3000);
