@@ -1175,19 +1175,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadScores();
 })
   
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    const bee = document.getElementById("bee");
-    if (!bee) return;
+setTimeout(() => {
+  const bee = document.getElementById("bee");
 
-    bee.classList.add("bee-trip");
+  if (!bee) {
+    alert("Bee not found");
+    return;
+  }
 
-    setTimeout(() => {
-      bee.classList.remove("bee-trip");
-      bee.style.animation = "beeFly 3s ease-in-out infinite";
-    }, 6000);
-
-  }, 2200);
+ bee.style.transition = "transform 2s ease-in-out";
+bee.style.transform = "translate(200px,
+}, 3000);
 });
 </script>
 </body>
