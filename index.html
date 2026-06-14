@@ -1174,9 +1174,19 @@ document.getElementById("thirdScore").textContent = third?.signups || 0;
   if (index === 1) tr.classList.add("rank-2");
   if (index === 2) tr.classList.add("rank-3");
 
+let badge = "";
+
+if (row.signups >= 5) {
+  badge = "🚀";
+} else if (row.signups >= 3) {
+  badge = "🔥";
+} else if (row.signups >= 1) {
+  badge = "🐝";
+}
+    
   tr.innerHTML = `
       <td class="rank">${index + 1}</td>
-      <td class="name">${row.fundraiser}</td>
+      <td class="name">${row.fundraiser}${badge}</td>
       <td>
   <span class="office-badge">${row.office}</span>
 </td>
