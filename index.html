@@ -861,6 +861,17 @@ h1 {
 .latest-card {
   animation: latestFlash 1.5s infinite;
 }
+
+    .activity-card {
+  margin-bottom: 12px;
+}
+
+#latestActivity {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
   </style>
 </head>
 <body>
@@ -942,6 +953,11 @@ h1 {
     
   </section>
 
+    <div class="card activity-card">
+  <div class="label">⚡ Latest Activity</div>
+  <div id="latestActivity">Waiting for sign-ups...</div>
+</div>
+    
  <div class="filters">
 
   <input type="date" id="datePicker">
@@ -1152,6 +1168,11 @@ document.getElementById("latestSignup").textContent =
   
 document.getElementById("totalToday").textContent = total;
 document.getElementById("activeFundraisers").textContent = data.length;
+
+  document.getElementById("latestActivity").textContent =
+  latest
+    ? `${latest.fundraiser} just got a sign-up`
+    : "Waiting for sign-ups...";
 
   
 const first = data[0];
