@@ -1178,13 +1178,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 setTimeout(() => {
   const bee = document.getElementById("bee");
 
-  if (!bee) {
-    alert("Bee not found");
-    return;
-  }
+  if (!bee) return;
 
   bee.style.transition = "transform 2s ease-in-out";
-  bee.style.transform = "translate(200px, 80px)";
+  bee.style.transform = "translate(-180px, 80px)";
+
+  setTimeout(() => {
+    bee.style.transform = "translate(0,0)";
+  }, 5000);
+
 }, 3000);
 </script>
   
