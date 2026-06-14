@@ -808,6 +808,24 @@ h1 {
     margin-top: 10px !important;
   }
 }
+    @media (max-width: 700px) {
+  .summary,
+  .podium-container,
+  .table-wrap {
+    width: calc(100vw - 24px) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .table-wrap {
+    overflow-x: hidden !important;
+  }
+
+  table {
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+}
   </style>
 </head>
 <body>
